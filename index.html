@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Object Interaction Dashboard</title>
+    
+    <!-- Load TensorFlow.js and COCO-SSD via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd" defer></script>
+
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <!-- Dark Animated Particle Background -->
+    <div id="particle-bg"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-screen" class="glass-panel">
+      <div class="loader"></div>
+      <h2>Initializing AI Core</h2>
+      <p>Loading COCO-SSD Model...</p>
+    </div>
+
+    <!-- Top Status Bar -->
+    <header class="glass-panel status-bar">
+      <div class="status-item">
+        <span class="label">Webcam:</span>
+        <span id="cam-status" class="value text-warn">Waiting...</span>
+      </div>
+      <div class="status-item">
+        <span class="label">Model:</span>
+        <span id="model-status" class="value text-warn">Loading...</span>
+      </div>
+      <div class="status-item">
+        <span class="label">FPS:</span>
+        <span id="fps-counter" class="value text-accent">0</span>
+      </div>
+      <div class="status-item controls">
+        <button id="toggle-detection" class="glass-btn">Pause</button>
+        <button id="toggle-bounds" class="glass-btn">Hide Bounds</button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-container">
+      
+      <!-- Center: Camera Feed & Canvas -->
+      <section class="camera-wrapper glass-panel">
+        <video id="webcam" autoplay playsinline muted></video>
+        <canvas id="canvas-overlay"></canvas>
+      </section>
+
+      <!-- Right: Interaction Widgets -->
+      <aside class="widgets-container">
+        
+        <div id="widget-person" class="glass-panel widget hide">
+          <div class="pulse-indicator green"></div>
+          <h3>User Present</h3>
+          <p>System tracking active.</p>
+        </div>
+
+        <div id="widget-cell-phone" class="glass-panel widget alert hide">
+          <div class="pulse-indicator red"></div>
+          <h3>Distraction Alert</h3>
+          <p>Phone detected! Stay focused on your task.</p>
+        </div>
+
+        <div id="widget-bottle" class="glass-panel widget info hide">
+          <div class="pulse-indicator blue"></div>
+          <h3>Hydration Reminder</h3>
+          <p>Good job! Keep drinking water.</p>
+        </div>
+
+        <div id="widget-laptop" class="glass-panel widget mode hide">
+          <div class="pulse-indicator purple"></div>
+          <h3>Coding Mode</h3>
+          <p>Laptop detected. Ready to code.</p>
+        </div>
+
+        <div id="widget-book" class="glass-panel widget mode hide">
+          <div class="pulse-indicator orange"></div>
+          <h3>Study Mode</h3>
+          <p>Book detected. Timer started.</p>
+          <div class="timer">25:00</div>
+        </div>
+
+        <div id="widget-cup" class="glass-panel widget calm hide">
+          <div class="pulse-indicator teal"></div>
+          <h3>Break Reminder</h3>
+          <p>Enjoy your drink. Time for a quick break.</p>
+        </div>
+
+      </aside>
+    </main>
+
+    <!-- Bottom Left: Recent Detections List -->
+    <div class="history-panel glass-panel">
+      <h3>Active Objects</h3>
+      <ul id="detection-list">
+        <!-- populated dynamically -->
+      </ul>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
